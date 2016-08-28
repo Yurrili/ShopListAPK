@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="15dp"
     android:paddingEnd="15dp"
     android:paddingStart="15dp"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="uj.edu.yuri.shoplist.view.ListViewActivity"
     tools:showIn="@layout/activity_list_view">
@@ -14,8 +16,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="Title"
-        android:id="@+id/title_input"
-        >
+        android:id="@+id/title_input">
         <EditText
             android:id="@+id/title"
             android:layout_width="fill_parent"
@@ -26,8 +27,10 @@
     <android.support.v7.widget.RecyclerView
         android:layout_below="@+id/title_input"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/rv" />
+
+
 
     <TextView
         android:id="@+id/empty_view"
@@ -36,5 +39,51 @@
         android:gravity="center"
         android:visibility="gone"
         android:text="@string/no_data_available" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:src="@drawable/ic_menu_send"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/ic_s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_toEndOf="@+id/ic_s"
+                android:layout_toStartOf="@+id/ic_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Something to buy?"
+                    >
+                    <EditText
+                        android:id="@+id/new_shopping_item"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/ic_add"
+            android:src="@drawable/ic_menu_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:layout_alignParentEnd="true"
+            />
+
+    </RelativeLayout>
 
 </RelativeLayout>
