@@ -1,5 +1,6 @@
 package uj.edu.yuri.shoplist.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,10 +10,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
+
 import uj.edu.yuri.shoplist.R;
 import uj.edu.yuri.shoplist.controller.DataBaseHelperImpl;
-import uj.edu.yuri.shoplist.model.Item;
 import uj.edu.yuri.shoplist.model.ShoppingList;
 
 /**
@@ -23,7 +23,6 @@ public class MainActivity  extends BaseActivity {
     private List<ShoppingList> shoppingList;
     private RecyclerView.Adapter mAdapter;
     private DataBaseHelperImpl sqLiteDatabase;
-
 
     RecyclerView mRecyclerView;
     TextView emptyView;
@@ -41,15 +40,15 @@ public class MainActivity  extends BaseActivity {
         sqLiteDatabase = new DataBaseHelperImpl(getApplicationContext());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
+
         initRecyclerView();
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ListViewActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

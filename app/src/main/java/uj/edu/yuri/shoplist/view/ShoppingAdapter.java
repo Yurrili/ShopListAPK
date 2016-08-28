@@ -39,7 +39,6 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.Custom
     public ShoppingAdapter(Context context, ShoppingList items) {
         this.items = items;
         this.mContext = context;
-
     }
 
     @Override
@@ -71,16 +70,10 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.Custom
         public CustomViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-
         }
 
         public void bind(RecyclerView.ViewHolder holder, final Item item, final int position) {
-
-
             title.setText(item.getBody());
-
-
-
         }
 
     }
