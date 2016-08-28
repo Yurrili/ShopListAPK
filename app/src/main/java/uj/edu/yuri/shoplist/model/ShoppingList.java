@@ -71,6 +71,10 @@ public class ShoppingList implements Iterable<Item> {
             shoppingList.remove(a);
     }
 
+    public int size(){
+        return shoppingList.size();
+    }
+
     public void remove(int i){
        shoppingList.remove(i);
     }

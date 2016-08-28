@@ -41,7 +41,7 @@ public class BaseActivity extends AppCompatActivity
         initUI();
     }
 
-    private void initLibraries(){
+    protected void initLibraries(){
         // Library to binding views with valuables
         ButterKnife.bind(this);
     }
