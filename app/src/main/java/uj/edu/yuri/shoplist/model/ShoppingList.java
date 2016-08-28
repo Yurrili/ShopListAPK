@@ -79,6 +79,8 @@ public class ShoppingList implements Iterable<Item> {
        shoppingList.remove(i);
     }
 
+    public boolean isEmpty() {return shoppingList.isEmpty();}
+
     public Item get(int i){
         return shoppingList.get(i);
     }
