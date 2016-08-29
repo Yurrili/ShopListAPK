@@ -5,13 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="15dp"
-    android:paddingEnd="15dp"
-    android:paddingStart="15dp"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="uj.edu.yuri.shoplist.view.ListViewActivity"
     tools:showIn="@layout/activity_list_view">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_above="@+id/rel_lay"
+        android:layout_height="wrap_content">
     <android.support.design.widget.TextInputLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -28,9 +33,8 @@
         android:layout_below="@+id/title_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:id="@+id/rv" />
-
-
 
     <TextView
         android:id="@+id/empty_view"
@@ -39,12 +43,15 @@
         android:gravity="center"
         android:visibility="gone"
         android:text="@string/no_data_available" />
-
+    </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/rel_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="5dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:background="#fff"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal" >
 
@@ -52,6 +59,7 @@
             android:src="@drawable/ic_menu_send"
             android:layout_gravity="center_vertical"
             android:id="@+id/ic_s"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -61,17 +69,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Something to buy?"
-                    >
+
                     <EditText
                         android:id="@+id/new_shopping_item"
                         android:layout_width="fill_parent"
+                        android:hint="Something to buy?"
                         android:layout_height="wrap_content"
                         />
-                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
         <ImageView
@@ -80,6 +84,7 @@
             android:src="@drawable/ic_menu_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="3dp"
             android:layout_alignParentEnd="true"
             />

@@ -85,7 +85,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.title)
+        @BindView(R.id.title_list)
         TextView title;
         @BindView(R.id.items_quantity)
         TextView items_quantity;
@@ -114,6 +114,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
             title.setText(item.getTitle());
             date.setText(item.getTimestamp().toString());
             items_quantity.setText(String.valueOf(item.getQuantity()));
+
+            Utility.FontManager.setTypeface(fa_calendar, mContext,Utility.FontManager.FONTAWESOME);
+            Utility.FontManager.setTypeface(fa_shopping_cart, mContext,Utility.FontManager.FONTAWESOME);
 
             if (item.getQuantity() == 1) {
                 items_quantity_text.setText(items_quantity_text_single);

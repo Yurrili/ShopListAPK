@@ -10,6 +10,7 @@ import android.util.Log;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import uj.edu.yuri.shoplist.model.Item;
 import uj.edu.yuri.shoplist.model.ShoppingList;
@@ -55,31 +56,49 @@ public class DataBaseHelperImpl extends SQLiteOpenHelper {
     }
 
     /**
-     * @param list
+     * @param  title
      */
-    public void insertList(ShoppingList list) {
+    public ShoppingList insertList(String title) {
         Log.d("DB", "insert Shopping List");
         SQLiteDatabase dba = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-
-        if (list.getTitle() != null)
-            values.put(Entries.List.COLUMN_TITLE, list.getTitle());
-
-        values.put(Entries.List.COLUMN_TIMESTAMP, list.getTimestamp().getTime());
+        Timestamp tmp = new Timestamp(Calendar.getInstance().getTime().getTime());
+        values.put(Entries.List.COLUMN_TITLE, title);
+        values.put(Entries.List.COLUMN_TIMESTAMP, tmp.toString());
         values.put(Entries.List.COLUMN_ARCHIVED, 0);
         long id = dba.insert(Entries.List.TABLE_NAME, null, values);
 
-        for (Item item : list) {
-            values = new ContentValues();
-            values.put(Entries.ListItem.COLUMN_TITLE, item.getBody());
-            values.put(Entries.ListItem.COLUMN_DONE, item.isDone());
-            values.put(Entries.ListItem.COLUMN_LIST_ID, id);
-            dba.insert(Entries.ListItem.TABLE_NAME, null, values);
-        }
+        dba.close();
+        return new ShoppingList(id, title, tmp);
+    }
+
+    public Item insertItem(String title, long id_parent) {
+        Log.d("DB", "insert item");
+        SQLiteDatabase dba = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values = new ContentValues();
+        values.put(Entries.ListItem.COLUMN_TITLE, title);
+        values.put(Entries.ListItem.COLUMN_LIST_ID, id_parent);
+        values.put(Entries.ListItem.COLUMN_DONE, 0);
+        long id = dba.insert(Entries.ListItem.TABLE_NAME, null, values);
 
         dba.close();
-        Log.d("DB", "insert Shopping List - success");
+
+        return new Item(id,title,false);
+
+    }
+
+    public void checkItem(Item item){
+        Log.d("DB", "update List" + item.getId());
+        SQLiteDatabase dba = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Entries.ListItem.COLUMN_DONE, item.isDone());
+        dba.update(Entries.ListItem.TABLE_NAME, values, Entries.ListItem._ID + "='" + item.getId() + "'", null);
+        dba.close();
     }
 
     /**
@@ -96,7 +115,7 @@ public class DataBaseHelperImpl extends SQLiteOpenHelper {
     /**
      * @param item ready to remove
      */
-    public void removeListItem(Item item) {
+    public void removeItem(Item item) {
         Log.d("DB", "remove List item" + item.getId());
         SQLiteDatabase dba = this.getWritableDatabase();
         dba.delete(Entries.ListItem.TABLE_NAME, Entries.ListItem._ID + "='" + item.getId() + "'", null);
@@ -147,15 +166,7 @@ public class DataBaseHelperImpl extends SQLiteOpenHelper {
         dba.close();
     }
 
-    public void checkedItem(Item item) {
-        Log.d("DB", "update ShoppingList" + item.getId());
-        SQLiteDatabase dba = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(Entries.ListItem.COLUMN_DONE, item.isDone());
-        dba.update(Entries.ListItem.TABLE_NAME, values, Entries.ListItem._ID + "='" + item.getId() + "'", null);
-        dba.close();
-    }
 
     /**
      * @param list header of the list
@@ -179,6 +190,27 @@ public class DataBaseHelperImpl extends SQLiteOpenHelper {
 
         dba.close();
         return list;
+    }
+
+
+    public ShoppingList getList(long id){
+
+        Log.d("DB", "get Lists");
+        SQLiteDatabase dba = this.getReadableDatabase();
+        ShoppingList temp = new ShoppingList("");
+        Cursor c = dba.query(Entries.List.TABLE_NAME,
+                Entries.selectAllList,
+                Entries.List.COLUMN_ARCHIVED + "=? AND " + Entries.List._ID + "=?", new String[]{String.valueOf(0), String.valueOf(id)}, null, null, Entries.List.COLUMN_TIMESTAMP + " DESC");
+
+        if (c != null) {
+            for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                temp = new ShoppingList(c.getInt(0), c.getString(1), new Timestamp(c.getLong(3)));
+            }
+            c.close();
+        }
+
+        dba.close();
+        return temp;
     }
 
     /**

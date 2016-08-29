@@ -25,9 +25,10 @@ public class ShoppingList implements Iterable<Item> {
     @Nullable
     private Long id;
 
-    private List<Item> shoppingList = new ArrayList<>();
+    private final List<Item> shoppingList = new ArrayList<>();
 
     @Getter
+    @Setter
     private String title;
 
     @Getter
@@ -83,6 +84,10 @@ public class ShoppingList implements Iterable<Item> {
 
     public Item get(int i){
         return shoppingList.get(i);
+    }
+
+    public void setDoneTo(Item tmp){
+        shoppingList.get(shoppingList.indexOf(tmp)).setDone(tmp.isDone());
     }
 
     @Override

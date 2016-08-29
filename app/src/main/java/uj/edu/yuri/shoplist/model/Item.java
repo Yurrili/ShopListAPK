@@ -32,4 +32,9 @@ public class Item {
     public Item(String body) {
         this.body  = body;
     }
+
+    @Override
+    public String toString() {
+        return body;
+    }
 }
